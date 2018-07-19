@@ -45,15 +45,37 @@ namespace TicTacToeHayes
         }
 
         // Adds play to game board.
-        public void AddMark(char mark, int row, int col)
+        public void AddMark(Player player, int row, int col)
         {
-            GameBoard[row, col] = mark;
+            GameBoard[row, col] = player.Marker;
         }
 
-        // Returns winner, if any.
-        public char CheckBoard()
+        // Checks for player win, returns true if player won.
+        public bool CheckBoard(Player player)
         {
-            return NO_MARKER;
+            // Checks each row for win.
+            for(int row = 0; row < BoardRows; row++)
+            {
+                // Column iteratable.
+                int col;
+                // Compare adjacent columns..
+                for(col = 0; col < BoardColumns; col++)
+                {
+                    if(!(GameBoard[row,col] == player.Marker))
+                    {
+                        break;
+                    }
+                }
+
+                // Returns true when whole row matches.
+                if(col == BoardColumns)
+                {
+                    return true;
+                }
+            }
+
+            // If no matches..
+            return false;
         }
 
         // Properties

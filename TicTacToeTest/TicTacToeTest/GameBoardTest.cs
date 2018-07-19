@@ -14,6 +14,9 @@ namespace TicTacToeTest
 
             // Create an empty game board.
             Board board = new Board();
+            // Create dummy players.
+            Player playerX = new Player('X');
+            Player playerY = new Player('O');
             // Expected results, board with empty characters.
             char[,] createExpectedResult = new char[3, 3]
             {
@@ -29,11 +32,11 @@ namespace TicTacToeTest
             /**Test AddMark Method**/
 
             // Add marks to game board.
-            board.AddMark('X', 1, 1);
-            board.AddMark('O', 0, 1);
-            board.AddMark('X', 2, 0);
-            board.AddMark('O', 0, 0);
-            board.AddMark('X', 0, 2);
+            board.AddMark(playerX, 1, 1);
+            board.AddMark(playerY, 0, 1);
+            board.AddMark(playerX, 2, 0);
+            board.AddMark(playerY, 0, 0);
+            board.AddMark(playerX, 0, 2);
             // Expected results, updated board with marks added.
             char[,] addMarkExpectedResult = new char[3, 3]
             {
@@ -52,6 +55,9 @@ namespace TicTacToeTest
         {
             /**Test CheckRows Method**/
 
+            // Create dummy player.
+            Player playerX = new Player('X');
+            Player playerO = new Player('O');
             // Test boards
             Board board0 = new Board(new char[3, 3] // No winner.
 {
@@ -92,21 +98,26 @@ namespace TicTacToeTest
 
             /** No Winner**/
 
-            // Expected results, X has the most rows.
-            char noWinnerExpectedResult = ' ';
+            // Expected results, check returns false.
+            bool noWinnerExpectedResult = false;
             // Actual results, from CheckBoard method.
-            char noWinnerActualResult = board1.CheckBoard();
+            bool noWinnerActualResult = board0.CheckBoard(playerX);
             // Assert
             Assert.AreEqual(noWinnerExpectedResult, noWinnerActualResult);
 
-            /** Check Rows
+            /** Check Rows **/
 
-            // Expected results, X has the most rows.
-            char checkRowsExpectedResult = 'X';
+            // Expected results, 
+            // X should return true,
+            // O should return false.
+            bool checkRowsExpectedResultX = true;
+            bool checkRowsExpectedResultO = false;
             // Actual results, from CheckBoard method.
-            char checkRowsActualResult = board1.CheckBoard();
+            bool checkRowsActualResultX = board1.CheckBoard(playerX);
+            bool checksRowsActualResultO = board1.CheckBoard(playerO);
             // Assert
-            Assert.AreEqual(checkRowsExpectedResult, checkRowsActualResult);**/
+            Assert.AreEqual(checkRowsExpectedResultX, checkRowsActualResultX);
+            Assert.AreEqual(checkRowsExpectedResultO, checksRowsActualResultO);
         }
     }
 }
