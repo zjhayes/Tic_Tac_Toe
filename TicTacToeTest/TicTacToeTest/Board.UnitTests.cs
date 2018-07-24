@@ -5,7 +5,7 @@ using TicTacToeHayes;
 namespace TicTacToeUnitTests
 {
     [TestClass]
-    public class GameBoardTest
+    public class BoardTest
     {
         [TestMethod]
         public void AddMark_BoardsAreEqual_AreEqual()
@@ -16,18 +16,6 @@ namespace TicTacToeUnitTests
             // Create dummy players.
             Player playerX = new Player('X');
             Player playerY = new Player('O');
-
-            /** Expected results, board with empty characters.
-            char[,] createExpectedResult = new char[3, 3]
-            {
-                { ' ', ' ', ' ' },
-                { ' ', ' ', ' ' },
-                { ' ', ' ', ' ' }
-            };
-            // Actual results, returns game board from board object.
-            char[,] createActualResult = board.GameBoard;
-            // Assert.
-            CollectionAssert.AreEqual(createExpectedResult, createActualResult);**/
 
             /**Test AddMark Method**/
 
@@ -54,6 +42,33 @@ namespace TicTacToeUnitTests
         }
 
         [TestMethod]
+        public void ClearBoard_BoardCleared_AreEqual()
+        {
+            /** Tests whether ClearGameBoard method replaces markers with empty strings.**/
+
+            // Test board.
+            Board board = new Board(new char[3, 3] // No winner.
+            {
+                {'X', 'O', ' ' },
+                {'X', 'X', ' ' },
+                {'O', ' ', ' ' }
+            });
+            // Expected results, board with empty characters.
+            char[,] createExpectedResult = new char[3, 3]
+            {
+                { ' ', ' ', ' ' },
+                { ' ', ' ', ' ' },
+                { ' ', ' ', ' ' }
+            };
+            // Run method.
+            board.ClearGameBoard();
+            // Actual results, returns game board from board object.
+            char[,] createActualResult = board.GameBoard;
+            // Assert.
+            CollectionAssert.AreEqual(createExpectedResult, createActualResult);
+        }
+
+        [TestMethod]
         public void CheckBoard_NoMatch_ReturnFalse()
         {
             /**Test CheckRows Method when no rows match**/
@@ -64,24 +79,10 @@ namespace TicTacToeUnitTests
 
             // Test boards
             Board board = new Board(new char[3, 3] // No winner.
-{
-                {'O', 'O', ' ' },
-                {'X', ' ', 'X' },
-                {'X', ' ', ' ' }
-});
-
-
-            Board board4 = new Board(new char[3, 3] // Check right angles.
             {
-                {'O', 'O', 'X' },
                 {'X', 'X', ' ' },
-                {'X', ' ', 'X' }
-            });
-            Board board5 = new Board(new char[3, 3] // Cat's game.
-            {
-                {'O', 'X', 'O' },
-                {'O', 'X', 'X' },
-                {'X', 'O', 'X' }
+                {'X', 'X', 'O' },
+                {'O', ' ', ' ' }
             });
 
             // Actual results, from CheckBoard method.
@@ -101,7 +102,7 @@ namespace TicTacToeUnitTests
 
             // Test board
             Board board = new Board(new char[3, 3] // Matching row.
-{
+            {
                 {'O', 'O', ' ' },
                 {'X', 'X', 'X' },
                 {'X', ' ', ' ' }
@@ -117,14 +118,14 @@ namespace TicTacToeUnitTests
         [TestMethod]
         public void CheckBoard_ColumnMatch_ReturnTrue()
         {
-            /**Test CheckRows Method when column matches**/
+            /**Test CheckBoard Method when column matches**/
 
             // Create dummy player.
             Player playerX = new Player('X');
 
             // Test board
             Board board = new Board(new char[3, 3] // Column matches.
-{
+            {
                 {'X', 'O', 'O' },
                 {'X', 'X', ' ' },
                 {'X', ' ', ' ' }
@@ -140,24 +141,47 @@ namespace TicTacToeUnitTests
         [TestMethod]
         public void CheckBoard_LeftAngleMatch_ReturnTrue()
         {
-            /**Test CheckRows Method when no rows match**/
+            /**Test CheckBoard Method when left-to-right angle matches.**/
 
             // Create dummy player.
             Player playerX = new Player('X');
 
             // Test board.
             Board board = new Board(new char[3, 3] // Check left angles.
-{
+            {
                 {'X', 'O', 'O' },
                 {'X', 'X', ' ' },
                 {'O', ' ', 'X' }
             });
 
             // Actual results, from CheckBoard method.
-            bool checkLeftAnglesActualResult = board.CheckBoard(playerX);
+            bool checkLeftAngleActualResult = board.CheckBoard(playerX);
 
             // Assert
-            Assert.IsTrue(checkLeftAnglesActualResult);
+            Assert.IsTrue(checkLeftAngleActualResult);
+        }
+
+        [TestMethod]
+        public void CheckBoard_RightAngleMatch_ReturnTrue()
+        {
+            /**Test CheckBoard Method when right-to-left angle matches.**/
+
+            // Create dummy player.
+            Player playerx = new Player('X');
+
+            // Test board.
+            Board board = new Board(new char[3, 3] // Check right angles.
+            {
+                {'O', 'O', 'X' },
+                {'X', 'X', ' ' },
+                {'X', ' ', 'X' }
+            });
+
+            // Actual results, from CheckBoard method.
+            bool checkRightAngleActualResult = board.CheckBoard(playerx);
+
+            // Assert
+            Assert.IsTrue(checkRightAngleActualResult);
         }
     }
 }

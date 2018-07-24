@@ -7,8 +7,7 @@ namespace TicTacToeHayes
         //Fields
         private bool gameOver;
         private char[,] gameBoard;
-        private int boardRows = DEFAULT_DIMENSIONS;
-        private int boardColumns = DEFAULT_DIMENSIONS;
+        private int dimension = DEFAULT_DIMENSIONS;
 
         // Constants
         private const int DEFAULT_DIMENSIONS = 3;   // Default number of rows and columns.
@@ -18,7 +17,7 @@ namespace TicTacToeHayes
         public Board()
         {
             // Generate game board.
-            GameBoard = new char[BoardRows, BoardColumns];
+            GameBoard = new char[Dimension, Dimension];
 
             // Fill game board with space character.
             ClearGameBoard();
@@ -31,13 +30,13 @@ namespace TicTacToeHayes
         }
 
         // Clear board by resetting all spaces to space character.
-        private void ClearGameBoard()
+        public void ClearGameBoard()
         {
-            GameBoard = new char[BoardRows, BoardColumns];
+            GameBoard = new char[Dimension, Dimension];
 
-            for(int row = 0; row < BoardRows; row++)
+            for(int row = 0; row < Dimension; row++)
             {
-                for(int col = 0; col < BoardColumns; col++)
+                for(int col = 0; col < Dimension; col++)
                 {
                     GameBoard[row, col] = NO_MARKER;
                 }
@@ -54,12 +53,12 @@ namespace TicTacToeHayes
         public bool CheckBoard(Player player)
         {
             // Checks for row matching player marker.
-            for(int row = 0; row < BoardRows; row++)
+            for(int row = 0; row < Dimension; row++)
             {
                 // Column iteratable.
                 int col;
                 // Check current column matches..
-                for(col = 0; col < BoardColumns; col++)
+                for(col = 0; col < Dimension; col++)
                 {
                     if(!(GameBoard[row,col] == player.Marker))
                     {
@@ -67,19 +66,19 @@ namespace TicTacToeHayes
                     }
                 }
                 // Returns true when whole row matches.
-                if(col == BoardColumns)
+                if(col == Dimension)
                 {
                     return true;
                 }
             }
             
             // Check each column for matching player marker.
-            for(int col = 0; col < BoardColumns; col++)
+            for(int col = 0; col < Dimension; col++)
             {
                 // Row iterable.
                 int row;
                 // Check current row matches..
-                for(row = 0; row < BoardRows; row++)
+                for(row = 0; row < Dimension; row++)
                 {
                     // Break when markers don't watch.
                     if(!(GameBoard[row,col] == player.Marker))
@@ -88,15 +87,18 @@ namespace TicTacToeHayes
                     }
                 }
                 // Returns true when whole column matches.
-                if(row == BoardRows)
+                if(row == Dimension)
                 {
                     return true;
                 }
             }
 
-            // Check left angles for matching markers.
-            for(int row = 0, col = 0; row < BoardRows; row++)
+            // Check left-to-right angle for matching markers.
+            for(int col = 0; col < Dimension;)
             {
+                // Set row same as column.
+                int row = col; 
+
                 // Break when markers don't match.
                 if(!(GameBoard[row,col] == player.Marker))
                 {
@@ -107,7 +109,30 @@ namespace TicTacToeHayes
                 col++;
 
                 // Check if whole angle checked for matches.
-                if (col == boardColumns)
+                if (col == Dimension)
+                {
+                    // When angle matches..
+                    return true;
+                }
+            }
+
+            // Check right-to-left angle for matching markers.
+            for(int col = Dimension - 1; col > 0;)
+            {
+                // Set row same as column.
+                int row = col;
+
+                // Break when markers don't match.
+                if(!(GameBoard[row,col] == player.Marker))
+                {
+                    break;
+                }
+
+                // Iterate column.
+                col--;
+
+                // Check if whole angle checked for matches.
+                if (col == 0)
                 {
                     // When angle matches..
                     return true;
@@ -129,15 +154,10 @@ namespace TicTacToeHayes
             get { return gameBoard; }
             private set { this.gameBoard = value; }
         }
-        public int BoardRows                        // Number of rows on game board.
+        public int Dimension                        // Number of rows and columns on game board.
         {
-            get { return boardRows; }
-            set { this.boardRows = value; }
-        }
-        public int BoardColumns                     // Number of columns on game board.
-        {
-            get { return boardColumns; }
-            set { this.boardColumns = value; }
+            get { return dimension; }
+            set { this.dimension = value; }
         }
     }
 }
