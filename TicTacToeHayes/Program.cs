@@ -9,7 +9,7 @@ namespace TicTacToeHayes
     static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// Tic-Tac-Toe game.
         /// </summary>
         [STAThread]
         static void Main()

@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TicTacToeHayes;
 using System.Collections.Generic;
 
-namespace TicTacToeTest
+namespace TicTacToeUnitTests
 {
     [TestClass]
     public class PlayerTest

@@ -53,12 +53,12 @@ namespace TicTacToeHayes
         // Checks for player win, returns true if player won.
         public bool CheckBoard(Player player)
         {
-            // Checks each row for win.
+            // Checks for row matching player marker.
             for(int row = 0; row < BoardRows; row++)
             {
                 // Column iteratable.
                 int col;
-                // Compare adjacent columns..
+                // Check current column matches..
                 for(col = 0; col < BoardColumns; col++)
                 {
                     if(!(GameBoard[row,col] == player.Marker))
@@ -66,10 +66,50 @@ namespace TicTacToeHayes
                         break;
                     }
                 }
-
                 // Returns true when whole row matches.
                 if(col == BoardColumns)
                 {
+                    return true;
+                }
+            }
+            
+            // Check each column for matching player marker.
+            for(int col = 0; col < BoardColumns; col++)
+            {
+                // Row iterable.
+                int row;
+                // Check current row matches..
+                for(row = 0; row < BoardRows; row++)
+                {
+                    // Break when markers don't watch.
+                    if(!(GameBoard[row,col] == player.Marker))
+                    {
+                        break;
+                    }
+                }
+                // Returns true when whole column matches.
+                if(row == BoardRows)
+                {
+                    return true;
+                }
+            }
+
+            // Check left angles for matching markers.
+            for(int row = 0, col = 0; row < BoardRows; row++)
+            {
+                // Break when markers don't match.
+                if(!(GameBoard[row,col] == player.Marker))
+                {
+                    break;
+                }
+
+                // Iterate column.
+                col++;
+
+                // Check if whole angle checked for matches.
+                if (col == boardColumns)
+                {
+                    // When angle matches..
                     return true;
                 }
             }

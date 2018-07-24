@@ -48,8 +48,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameBoardTest.cs" />
-    <Compile Include="PlayerTest.cs" />
+    <Compile Include="Board.UnitTests.cs" />
+    <Compile Include="Player.UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
